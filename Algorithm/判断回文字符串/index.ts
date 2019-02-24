@@ -23,22 +23,20 @@ function generateLinkedList(s: string): LinkedNode {
  *       3. 当快指针为null，或者快指针结点的 next 指针为 null，则找到中间位置了
  *       4. 从中间位置开始，再遍历前后两部分的链表，比较每个结点值是否相等，如果相等，则是回文字符串。
  *       5. 比较过程中，恢复前半部分，使其整个链表完整如初
- * @param {string} s
+ * @param {LinkedNode} head
  * @returns {boolean}
  */
-function isPalindrome(s: string): boolean {
+function isPalindrome(head: LinkedNode): boolean {
   // 如果s是空，则直接返回false
-  let len = s.length;
-  if (len === 0) {
+  if (head.val === '') {
     return false;
   }
   // 如果s只有一个字符，则直接返回true
-  if (len === 1) {
+  if (head.next === null) {
     return true;
   }
   let result: boolean = true;
   // 生成链表
-  let head: LinkedNode = generateLinkedList(s);
   let p1: LinkedNode = head;// 慢指针
   let p2: LinkedNode = p1.next; // 快指针
   let p1Pre: LinkedNode = null; // 慢指针前一个结点
@@ -77,3 +75,5 @@ function isPalindrome(s: string): boolean {
 
   return result
 }
+
+export { generateLinkedList, isPalindrome };
