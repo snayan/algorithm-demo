@@ -4,7 +4,9 @@
   "description": "数据结构和算法示例",
   "main": "index.js",
   "scripts": {
-    "test": "yarn test"
+    "test": "jest",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/snayan/algorithm-demo/issues"
   },
-  "homepage": "https://github.com/snayan/algorithm-demo#readme"
+  "homepage": "https://github.com/snayan/algorithm-demo#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.6",
+    "jest": "^24.1.0",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3333"
+  }
 }

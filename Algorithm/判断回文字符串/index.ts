@@ -27,12 +27,12 @@ function generateLinkedList(s: string): LinkedNode {
  * @returns {boolean}
  */
 function isPalindrome(head: LinkedNode): boolean {
-  // 如果s是空，则直接返回false
-  if (head.val === '') {
+  // 如果空链表，则直接返回false
+  if (head == null) {
     return false;
   }
-  // 如果s只有一个字符，则直接返回true
-  if (head.next === null) {
+  // 如果只有一个字符，则直接返回true
+  if (head.next == null) {
     return true;
   }
   let result: boolean = true;
@@ -44,12 +44,14 @@ function isPalindrome(head: LinkedNode): boolean {
   let left: LinkedNode = null; // 回文字符串左边开始指针
   let right: LinkedNode = null; // 回文字符串右边开始指针
   // 第一步，选择中间结点，并反转前半部分结点
-  while (!p2 && !p2.next) {
-    p1.next = p1Pre; // 将p1.next 指向p1的前一个结点
+  while (p2 && p2.next) {
+    p1Pre = p1;
     p1 = p1Next;
     p1Next = p1Next.next; // p1 每次走一步
     p2 = p2.next.next; // p2 每次走2步
+    p1.next = p1Pre; // 将p1.next 指向p1的前一个结点
   }
+
   if (p2 === null) {
     // 单数个数，此时, p1就是指向链表中间结点
     left = p1.next; // 此时，前半部分链表已经被反转了
