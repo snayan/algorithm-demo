@@ -12,6 +12,8 @@ import LinkedNode from '../../DataStructure/LinkedNode';
  *       3. 当快指针为null，或者快指针结点的 next 指针为 null，则找到中间位置了
  *       4. 从中间位置开始，再遍历前后两部分的链表，比较每个结点值是否相等，如果相等，则是回文字符串。
  *       5. 比较过程中，恢复前半部分，使其整个链表完整如初
+ * 时间复杂度：O(n)
+ * 空间复杂度：O(1)
  * @param {LinkedNode} head
  * @returns {boolean}
  */
