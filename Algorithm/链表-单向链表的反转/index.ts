@@ -14,14 +14,14 @@ function reverseLinkedList(head: LinkedNode): LinkedNode {
     return head;
   }
   let currentPre = null;
-  let currentNext = head.next;
-  while (currentNext) {
+  let currentNext = null;
+  while (head) {
+    currentNext = head.next;
     head.next = currentPre;
     currentPre = head;
     head = currentNext;
-    currentNext = currentNext.next;
   }
-  return head;
+  return currentPre;
 }
 
 export { reverseLinkedList };

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": false
+  },
+  "include": [
+    "Algorithm/**/*",
+    "DataStructure/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
