@@ -1,4 +1,5 @@
-import { generateLinkedList, isPalindrome } from './index';
+import { generateLinkedList } from '../../DataStructure/LinkedNode';
+import { isPalindrome } from './index';
 
 describe('测试生成单向链表', () => {
   it('对于给定空字符串，生成单向链表', () => {

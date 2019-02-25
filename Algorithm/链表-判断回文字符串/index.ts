@@ -5,17 +5,6 @@
 
 import LinkedNode from '../../DataStructure/LinkedNode';
 
-function generateLinkedList(s: string): LinkedNode {
-  const head = new LinkedNode(null, null);
-  let current = head;
-  for (let v of s) {
-    let node = new LinkedNode(v, null);
-    current.next = node;
-    current = node;
-  }
-  return head.next;
-}
-
 /**
  * 判断是否回文字符串
  * 思路： 1. 慢指针每次前进一步，快指针每次前进两步
@@ -78,4 +67,4 @@ function isPalindrome(head: LinkedNode): boolean {
   return result
 }
 
-export { generateLinkedList, isPalindrome };
+export { isPalindrome };
