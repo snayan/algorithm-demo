@@ -1,29 +1,6 @@
 import { generateLinkedList } from '../../DataStructure/LinkedNode';
 import { isPalindrome } from './index';
 
-describe('测试生成单向链表', () => {
-  it('对于给定空字符串，生成单向链表', () => {
-    let s = '';
-    let head = generateLinkedList(s);
-    expect(head).toBeNull();
-  });
-  it('对于给定一个字符的字符串，生成单向链表', () => {
-    let s = '1';
-    let head = generateLinkedList(s);
-    expect(head.val).toBe(s);
-    expect(head.next).toBeNull();
-  });
-  it('对于给定多个字符的字符串，生成单向链表', () => {
-    let s = '123';
-    let head = generateLinkedList(s);
-    for (let v of s) {
-      expect(head.val).toBe(v);
-      head = head.next;
-    }
-    expect(head).toBeNull();
-  })
-});
-
 describe('测试回文字符串的判断', () => {
   it('空字符串，是非回文字符串', () => {
     let s = '';

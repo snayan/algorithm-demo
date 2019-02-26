@@ -16,10 +16,10 @@ class LinkedNode {
 /**
  * 对于给定字符串，生成单向链表
  * @export
- * @param {string} s 字符串
+ * @param {string|any[]} s 字符串 或者数组
  * @returns {LinkedNode} 链表头部指针
  */
-export function generateLinkedList(s: string): LinkedNode {
+export function generateLinkedList(s: string | any[]): LinkedNode {
   const head = new LinkedNode(null, null);
   let current = head;
   for (let v of s) {
@@ -28,6 +28,26 @@ export function generateLinkedList(s: string): LinkedNode {
     current = node;
   }
   return head.next;
+}
+
+/**
+ * 对于给定字符串，生成循环链表
+ * @export
+ * @param {string|any[]} s 字符串 或者数组
+ * @returns {LinkedNode} 链表头部指针
+ */
+export function generateCycleLinkedList(s: string | any[]): LinkedNode {
+  let head = generateLinkedList(s);
+  let p = head;
+  while (p && p.next) {
+    p = p.next;
+  }
+  if (p === head) {
+    // 只有一个结点
+    return head;
+  }
+  p.next = head;
+  return head;
 }
 
 export default LinkedNode;
