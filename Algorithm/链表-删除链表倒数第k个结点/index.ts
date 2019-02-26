@@ -14,23 +14,22 @@ import LinkedNode from '../../DataStructure/LinkedNode';
  * 空间复杂度：O(1)
  * @param {LinkedNode} head 单项链表
  * @param {number} position 倒数位置
- * @returns {LinkedNode} 被删除的结点
+ * @returns {LinkedNode} 删除结点之后新的链表
  */
 function deleteBackwardPositionNode(head: LinkedNode, position: number): LinkedNode {
   // 如果链表为空，则直接返回null
   if (head == null) {
     return null;
   }
-  // 如果position小于0，则直接返回null
-  if (position < 0) {
-    return null;
+  // 如果position小于0，则直接返回head
+  if (position <= 0) {
+    return head;
   }
 
   let m = 0; // 定义中间结点位置
   let s = 0; // 定义链表结点个数
   let p1 = head; // 慢指针，每次前进一步
   let p2 = head.next; // 快指针，每次前进两步
-  let result = null; // 被删除结点;
 
   while (p2 && p2.next) {
     p1 = p1.next;
@@ -52,7 +51,7 @@ function deleteBackwardPositionNode(head: LinkedNode, position: number): LinkedN
 
   if (index < 0) {
     // 如果index 为负数，则说明position超出了链表长度
-    return null;
+    return head;
   } else if (index > m) {
     // 如果index > m，则说明需要删除的结点在后半部分，只需要从中间结点往后找
     offset = index - m;
@@ -65,19 +64,17 @@ function deleteBackwardPositionNode(head: LinkedNode, position: number): LinkedN
 
   if (offset === 0) {
     // 则说明就是头结点需要被删除,
-    result = head;
     head = head.next;
-    return result;
+    return head;
   }
 
   while (offset - 1 > 0) {
     start = start.next;
-    offset++;
+    offset--;
   }
-  result = start.next;
   start.next = start.next.next;
 
-  return result;
+  return head;
 }
 
 export { deleteBackwardPositionNode };
