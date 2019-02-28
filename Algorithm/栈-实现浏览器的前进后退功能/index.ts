@@ -14,7 +14,7 @@ class BrowserHistory<Page> {
   private auxiliaryStack: Stack<Page>;
 
   /**
-   * 当前history里的页面个数
+   * 当前session的页面个数
    *
    * @type {number}
    * @memberof BrowserHistory
@@ -26,6 +26,7 @@ class BrowserHistory<Page> {
     this.auxiliaryStack = new Stack();
     this.length = 0;
   }
+
   /**
    * 跳转到相对当前页面的页面，如果没有参数或者n =0，则刷新当前页面。
    * 如果n超出范围，则静默失败
@@ -49,6 +50,7 @@ class BrowserHistory<Page> {
       }
     }
   }
+
   /**
    * 前进。相当于go(1)。
    *
@@ -57,6 +59,7 @@ class BrowserHistory<Page> {
   public forward() {
     this.go(1);
   }
+
   /**
    * 后退。相当于go(-1)
    *
@@ -65,6 +68,7 @@ class BrowserHistory<Page> {
   public back() {
     this.go(-1);
   }
+
   /**
    * 压入新的page
    *
@@ -74,7 +78,9 @@ class BrowserHistory<Page> {
   public pushState(page: Page) {
     this.auxiliaryStack.clear();
     this.mainStack.push(page);
+    this.length = this.mainStack.getStackCount();
   }
+
   /**
    * 使用新的page替换当前页面
    *
