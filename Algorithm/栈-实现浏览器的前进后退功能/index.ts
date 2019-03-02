@@ -43,10 +43,12 @@ class BrowserHistory<Page> {
         n = n - 1;
       }
     } else if (n < 0) {
-      // 后退
-      while (n < 0 && (forwardPage = this.mainStack.pop())) {
+      // 后退, 当mainStack栈里只有一个元素时，说明已经退后到最后一页了，不能再继续后退了
+      let l = this.mainStack.getStackCount();
+      while (n < 0 && l > 1 && (forwardPage = this.mainStack.pop())) {
         this.auxiliaryStack.push(forwardPage);
         n = n + 1;
+        l = l - 1;
       }
     }
   }
@@ -91,6 +93,19 @@ class BrowserHistory<Page> {
     this.auxiliaryStack.clear();
     this.mainStack.pop();
     this.mainStack.push(page);
+    this.length = this.mainStack.getStackCount();
+  }
+  /**
+   * 获取当前页面
+   * 
+   * @returns {Page} 当前页面
+   * @memberof BrowserHistory
+   */
+  public getCurrentPage(): Page {
+    if (this.length === 0) {
+      return null;
+    }
+    return this.mainStack.getCurrentItem();
   }
 }
 
