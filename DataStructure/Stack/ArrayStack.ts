@@ -48,6 +48,20 @@ class ArrayStack<Item> {
   }
 
   /**
+   * 返回当前栈顶元素
+   * 
+   * @returns {Item} 栈顶元素 
+   * @memberof ArrayStack
+   */
+  public getCurrentItem(): Item {
+    let l = this.getStackCount();
+    if (l === 0) {
+      return null;
+    }
+    return this.values[l - 1];
+  }
+
+  /**
    * 清空栈
    * 
    * @memberof Stack

@@ -46,6 +46,14 @@ type LinkedStackCtor = LinkedStack<number>;
         stack.push(i);
         expect(stack.getStackCount()).toBe(i + 1);
       }
+    });
+    it('获取栈顶元素', () => {
+      let count = 100;
+      expect(stack.getCurrentItem()).toBeNull();
+      for (let i = 0; i < count; i++) {
+        stack.push(i);
+        expect(stack.getCurrentItem()).toBe(i);
+      }
     })
   });
 })
