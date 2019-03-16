@@ -5,46 +5,50 @@ import ArrayStack from '../../DataStructure/Stack/ArrayStack';
 const ERROR_MESSAGE = 'invalid expression';
 const VALID_EXPRESSION_REG = /^(\d|\.|\(|\)|\+|-|\*|\/|\s)+$/;
 // 判断是否操作数
-const isDigit = (c: string) => {
-  return /^\d|\.$/.test(c);
-}
+export const isDigit = (c: string) => {
+  return /^(\d|\.)$/.test(c);
+};
 // 判断是否运算符
-const isOperator = (c: string) => {
-  return /^\+|-|\*|\/$/.test(c);
+export const isOperator = (c: string) => {
+  return /^(\+|-|\*|\/)$/.test(c);
 };
 // 判断是否空格
-const isSpace = (c: string) => {
+export const isSpace = (c: string) => {
   return /\s/.test(c);
-}
+};
 // 判断是否左括号
-const isLeftParenthesis = (c: string) => {
+export const isLeftParenthesis = (c: string) => {
   return c === '(';
-}
+};
 // 判断是否右括号
-const isRightParenthesis = (c: string) => {
+export const isRightParenthesis = (c: string) => {
   return c === ')';
-}
+};
 
 // 获取优先级
-const getOperatorPriority = (operator: string): number => {
+export const getOperatorPriority = (operator: string): number => {
   let priority: number = 0;
   switch (operator) {
     case '+':
-      priority = 1; break;
+      priority = 1;
+      break;
     case '-':
-      priority = 1; break;
+      priority = 1;
+      break;
     case '*':
-      priority = 2; break;
+      priority = 2;
+      break;
     case '/':
-      priority = 2; break;
+      priority = 2;
+      break;
     default:
       priority = 0;
   }
   return priority;
-}
+};
 
 // 进行计算
-const compute = (leftOperand: number, rightOperand: number, operator: string) => {
+export const compute = (leftOperand: number, rightOperand: number, operator: string) => {
   if (leftOperand == null || rightOperand == null) {
     throw new Error(ERROR_MESSAGE);
   }
@@ -66,9 +70,11 @@ const compute = (leftOperand: number, rightOperand: number, operator: string) =>
         result = leftOperand / rightOperand;
       }
       break;
+    default:
+      throw new Error(ERROR_MESSAGE);
   }
   return result;
-}
+};
 
 /**
  * 实现四则表达式运算,支持括号,支持小数
@@ -86,10 +92,10 @@ const compute = (leftOperand: number, rightOperand: number, operator: string) =>
  * @param {string} expression 初始表达式
  * @returns {number} 运算结果
  */
-function fourExpressionArithmetic(expression: string): number {
+export function fourExpressionArithmetic(expression: string): number {
   interface OperatorStackItem {
     operator: string;
-    priority: number
+    priority: number;
   }
   let operatorStack = new ArrayStack<OperatorStackItem>(); // 运算符栈
   let operandStack = new ArrayStack<number>(); // 操作数
@@ -99,25 +105,29 @@ function fourExpressionArithmetic(expression: string): number {
     throw new Error(ERROR_MESSAGE);
   }
 
-  let p = 0, q = 0;
+  let anchor = 0; // 数字起始锚点
+  let cursor = 0; // 当前下标
+  let count = 0; // 已经遍历过的个数
   let len = expression.length;
   let character, word;
-  while (q < len) {
-    character = expression[q++];
+  while (count < len) {
+    count = count + 1;
+    cursor = count - 1;
+    character = expression[cursor];
     if (isSpace(character)) {
       // 如果遇到空格，则跳过，继续
       continue;
     }
     if (isDigit(character)) {
-      if (q === 0 || !isDigit(expression[q - 1])) {
-        p = q;
+      if (cursor === 0 || !isDigit(expression[cursor - 1])) {
+        anchor = cursor;
       }
-      if (q < len - 1 && isDigit(expression[q + 1])) {
+      if (cursor < len - 1 && isDigit(expression[cursor + 1])) {
         // 如果下一个字符还是数字，则跳过，继续
         continue;
       } else {
         // 否则，获取操作数，并压入栈
-        word = expression.slice(p, q + 1);
+        word = expression.slice(anchor, cursor + 1);
         operandStack.push(Number(word));
       }
       continue;
@@ -143,13 +153,13 @@ function fourExpressionArithmetic(expression: string): number {
       operatorStack.push({ operator: character, priority: currentPriority });
     }
     if (isLeftParenthesis(character)) {
-      // 如果，是左括号，优先级加1
-      priority = priority + 1;
+      // 如果，是左括号，优先级加10
+      priority = priority + 10;
       continue;
     }
     if (isRightParenthesis(character)) {
-      // 如果，是右括号，优先级减1
-      priority = priority - 1;
+      // 如果，是右括号，优先级减10
+      priority = priority - 10;
       // 如果优先级小于0了，则说明右括号多了，表达式非法
       if (priority < 0) {
         throw new Error(ERROR_MESSAGE);
@@ -178,8 +188,11 @@ function fourExpressionArithmetic(expression: string): number {
 
   // 最后，操作数栈只有一个元素，则运算符栈为空
   if (operandStack.getStackCount() === 1 && operatorStack.getStackCount() === 0) {
-    return operandStack.getCurrentItem();
+    const result = operandStack.getCurrentItem();
+    if (!Number.isNaN(result)) {
+      return result;
+    }
   }
 
-  throw new Error(ERROR_MESSAGE)
+  throw new Error(ERROR_MESSAGE);
 }
