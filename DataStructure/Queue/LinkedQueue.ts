@@ -45,6 +45,17 @@ class LinkedQueue<Item> {
   }
 
   /**
+   *  清空队列
+   *
+   * @memberof LinkedQueue
+   */
+  public clear() {
+    this.head = new LinkedNode(null, null);
+    this.tail = this.head;
+    this.count = 0;
+  }
+
+  /**
    * 获取队列的长度
    *
    * @returns {number} 返回队列元素个数

@@ -36,6 +36,15 @@ class ArrayQueue<Item> {
   }
 
   /**
+   * 清空队列
+   *
+   * @memberof ArrayQueue
+   */
+  public clear() {
+    this.values = [];
+  }
+
+  /**
    * 获取当前队列长度
    *
    * @returns {number} 当前队列长度
