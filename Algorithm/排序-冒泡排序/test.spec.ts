@@ -31,6 +31,11 @@ describe('冒泡排序', () => {
     bubbleSortOnArray(arr);
     expect(arr.length).toBe(1);
 
+    // 多个固定元素
+    arr = [2, 1, 3, 2, 35, 9, 1, 6];
+    bubbleSortOnArray(arr);
+    expect(arr.join(',')).toBe('1,1,2,2,3,6,9,35');
+
     // 多个元素的随机数字
     cases.forEach((arr) => {
       bubbleSortOnArray(arr);
@@ -52,6 +57,16 @@ describe('冒泡排序', () => {
     bubbleSortOnLinkedNode(head);
     expect(head.val).toBe(1);
     expect(head.next).toBeNull();
+
+    // 多个固定元素
+    head = generateLinkedList([2, 1, 3, 2, 35, 9, 1, 6]);
+    bubbleSortOnLinkedNode(head);
+    let arr = [];
+    while (head) {
+      arr.push(head.val);
+      head = head.next;
+    }
+    expect(arr.join(',')).toBe('1,1,2,2,3,6,9,35');
 
     // 多个元素的随机数字
     cases.forEach((arr) => {
