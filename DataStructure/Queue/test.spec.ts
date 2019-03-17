@@ -22,8 +22,8 @@ import LinkedQueue from './LinkedQueue';
     it('测试清空队列', () => {
       for (let i = 0; i < count; i++) {
         queue.enqueue(i);
+        expect(queue.getQueueCount()).toBe(i + 1);
       }
-      expect(queue.getQueueCount()).toBe(count);
       queue.clear();
       expect(queue.getQueueCount()).toBe(0);
     });
