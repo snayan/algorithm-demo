@@ -24,6 +24,7 @@ export function insertionSortOnArray(arr: number[]) {
   // 第一个当作有序的，从第二个元素开始，
   for (let i = 1; i < len; i++) {
     let index = i; // 标志可插入位置
+    const tmp = arr[i]; // 暂存当前元素
     for (let j = 0; j < i; j++) {
       if (arr[i] < arr[j]) {
         index = j;
@@ -35,7 +36,7 @@ export function insertionSortOnArray(arr: number[]) {
       arr[j] = arr[j - 1];
     }
     // 将元素插入
-    arr[index] = arr[i];
+    arr[index] = tmp;
   }
 }
 
@@ -50,7 +51,7 @@ export function insertionSortOnArray(arr: number[]) {
 export function insertionSortOnLinkedNode(head: LinkedNode) {
   // 链表为空，或则链表只有一个结点，直接返回
   if (head === null || head.next === null) {
-    return;
+    return head;
   }
 
   let cursor: LinkedNode = head.next; // 后半部分结点
@@ -79,6 +80,10 @@ export function insertionSortOnLinkedNode(head: LinkedNode) {
           node.next = find;
         }
       }
+      if (hasInsert) {
+        // 如果已经插入了，则不需要再遍历后面的了
+        break;
+      }
       pre = find;
       find = find.next;
     }
@@ -88,4 +93,5 @@ export function insertionSortOnLinkedNode(head: LinkedNode) {
       node.next = null;
     }
   }
+  return head;
 }
