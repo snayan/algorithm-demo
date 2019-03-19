@@ -23,10 +23,10 @@ export function selectionSortOnArray(arr: number[]) {
 
   for (let i = 0; i < len - 1; i++) {
     let minIndex = i;
-    for (let j = i; j < len - 1; j++) {
+    for (let j = i; j < len; j++) {
       // 找出后半部分最小的值
-      if (arr[j] > arr[j + 1]) {
-        minIndex = j + 1;
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
       }
     }
     if (minIndex != i) {
@@ -44,7 +44,7 @@ export function selectionSortOnArray(arr: number[]) {
      3. 重复上面步骤，直到原链表为空，那么整个新链表就是有序的了
 时间复杂度：O(n * n)
 空间复杂度：O(1)
-是否稳定排序：是
+是否稳定排序：否
 */
 export function selectionSortOnLinkedNode(head: LinkedNode) {
   // 如果链表为空，或则链表只有一个结点，则直接返回
@@ -52,36 +52,30 @@ export function selectionSortOnLinkedNode(head: LinkedNode) {
     return;
   }
 
-  const sortedHead = new LinkedNode(null, null); // 有序部分的链表
-  let sortedTail = sortedHead; // 有序部分的链表尾部
-
-  const guard = new LinkedNode(null, head); // 新增一个哨兵节点
-  let cursor: LinkedNode = guard;
-  let minPreNode: LinkedNode = guard; // 最小节点的前一个节点
-  let minNode: LinkedNode;
-  while (cursor.next) {
+  let sortedTail: LinkedNode = new LinkedNode(null, head);
+  let cursor: LinkedNode = sortedTail.next;
+  let minNode: LinkedNode = cursor;
+  while (cursor) {
     // 遍历未排序部分，找到最小节点
-    if (cursor.next.val < minPreNode.next.val) {
-      minPreNode = cursor;
+    if (cursor.val < minNode.val) {
+      minNode = cursor;
     }
-    cursor = cursor.next;
     if (cursor.next === null) {
       // 到达原链表尾部了
-      // 先暂存最小节点
-      minNode = minPreNode.next;
-      // 删除原链表中最小节点
-      minPreNode.next = minPreNode.next.next;
-      // 将最小节点加入新链表尾部
-      sortedTail.next = minNode;
-      sortedTail = minNode;
+      // 交换数据
+      if (minNode != sortedTail.next) {
+        const tmp = minNode.val;
+        minNode.val = sortedTail.next.val;
+        sortedTail.next.val = tmp;
+      }
+      sortedTail = sortedTail.next;
 
-      if (cursor !== guard) {
+      if (sortedTail !== cursor) {
         // 再从头来，从原链表中寻找最小节点，重复上面步骤
-        cursor = guard;
+        cursor = sortedTail.next;
+        minNode = cursor;
       }
     }
+    cursor = cursor.next;
   }
-
-  // 赋值新的链表
-  head = sortedHead.next;
 }
