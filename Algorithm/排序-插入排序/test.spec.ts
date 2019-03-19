@@ -49,19 +49,18 @@ describe('插入排序', () => {
   it('链表存储', () => {
     // 空链表
     let empty: LinkedNode = generateLinkedList([]);
-    empty = insertionSortOnLinkedNode(empty);
+    insertionSortOnLinkedNode(empty);
     expect(empty).toBeNull();
 
     // 一个元素的链表
     let one = generateLinkedList([1]);
-    one = insertionSortOnLinkedNode(one);
+    insertionSortOnLinkedNode(one);
     expect(one.val).toBe(1);
     expect(one.next).toBeNull();
 
     // 多个固定元素
-    debugger;
     let more = generateLinkedList([2, 1, 3, 2, 35, 9, 1, 6]);
-    more = insertionSortOnLinkedNode(more);
+    insertionSortOnLinkedNode(more);
     let arr = [];
     while (more) {
       arr.push(more.val);
@@ -72,7 +71,7 @@ describe('插入排序', () => {
     // 多个元素的随机数字
     cases.forEach((arr) => {
       let randomMore = generateLinkedList(arr);
-      randomMore = insertionSortOnLinkedNode(randomMore);
+      insertionSortOnLinkedNode(randomMore);
       while (randomMore && randomMore.next) {
         expect(randomMore.val).toBeLessThanOrEqual(randomMore.next.val);
         randomMore = randomMore.next;

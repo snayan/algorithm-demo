@@ -51,47 +51,42 @@ export function insertionSortOnArray(arr: number[]) {
 export function insertionSortOnLinkedNode(head: LinkedNode) {
   // 链表为空，或则链表只有一个结点，直接返回
   if (head === null || head.next === null) {
-    return head;
+    return;
   }
 
-  let cursor: LinkedNode = head.next; // 后半部分结点
-  head.next = null; //  前部分结点
+  // 先将head提前，为了使它保持不变
+  const first = new LinkedNode(head.val, head.next);
+  head.next = first;
 
-  let node: LinkedNode;
-  let find: LinkedNode = head;
-  let pre: LinkedNode = null;
-  let hasInsert: boolean = false;
+  let cursor = head.next.next; // 从第二个节点开始，默认第一个节点是有序的
+  let preCursor: LinkedNode = head.next;
+  let preInsertion: LinkedNode;
+  let insertion: LinkedNode; // 在前半部分查找插入位置
+
   while (cursor) {
-    find = head; // 每次都从头开始找
-    pre = null; // 上一个结点
-    hasInsert = false;
-    node = cursor; // 从后半段取一个结点
-    cursor = cursor.next;
-    while (find) {
-      if (node.val < find.val) {
-        // 找到要插入的位置了
-        hasInsert = true;
-        if (pre === null) {
-          // 插入到链头
-          node.next = head;
-          head = node;
-        } else {
-          pre.next = node;
-          node.next = find;
-        }
-      }
-      if (hasInsert) {
-        // 如果已经插入了，则不需要再遍历后面的了
+    preInsertion = head;
+    insertion = head.next; // 每次从第一个节点开始寻找
+    while (insertion != cursor) {
+      if (cursor.val < insertion.val) {
+        // 找到合适的位置了
         break;
       }
-      pre = find;
-      find = find.next;
+      preInsertion = insertion;
+      insertion = insertion.next;
     }
-    if (!hasInsert) {
-      // 如果前半部分遍历完了，还没有找到合适的位置插入，则说明它应该插入到前半部分的最后
-      pre.next = node;
-      node.next = null;
+    // 将node插入到前半部分合适的位置
+    if (cursor != insertion) {
+      preCursor.next = cursor.next;
+      preInsertion.next = cursor;
+      cursor.next = insertion;
+      cursor = preCursor.next;
+    } else {
+      preCursor = cursor;
+      cursor = cursor.next;
     }
   }
-  return head;
+
+  // 还原head
+  head.val = head.next.val;
+  head.next = head.next.next;
 }
