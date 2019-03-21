@@ -70,7 +70,7 @@ export function quickSortOnArray(arr: number[]) {
 
 /* 使用快速排序，把链表存储的数字按照从小到大排序
 思路：1. 选择链表头节点作为分区节点，pivot
-     2. 从第二个节点开始遍历，如果节点小于pivot，则放在前部分，否则放到后部分
+     2. 从头节点开始遍历，如果节点小于pivot，则放在前部分，否则放到后部分
      3. 一轮之后，得到 前部分 < pivot < 后部分
      4. 类似的对前部分重复步骤1到步骤3，对后部分也重复步骤1到步骤3
 时间复杂度：O(n * logn)
@@ -91,41 +91,44 @@ export function quickSortOnLinkedNode(head: LinkedNode) {
 
   // 对区间 head 到 tail做分区，并返回分区节点
   const partition = (head: LinkedNode, tail: LinkedNode) => {
-    /* 思路：1. 每次直接选取第一个节点作为分区节点
+    /* 思路：1. 每次直接选取区间尾节点节点作为分区节点
             2. 把当前区间分为2部分，前面是已处理部分，后面是未处理部分，且前部分只小于pivot
             3. 每次从未处理部分取一个节点，比较与pivot大小，如果比pivot小，则放到前部分尾部
             4. 直到未处理部分为空，
             5. 最后，将pivot放入到合适的位置
      */
-    const pivot = head.val; // 选取第一个节点为pivot
-    let middle = head.next; // middle区分已处理部分和未处理部分
-    let cursor = head.next; // 从第二个节点开始
-    do {
+    const pivot = tail.val; // 选取尾节点为pivot
+    let preNode = null;
+    let middle = head; // middle区分已处理部分和未处理部分
+    let cursor = head; // 从头节点开始
+    while (cursor != tail) {
       if (cursor.val < pivot) {
         swap(middle, cursor);
+        preNode = middle;
         middle = middle.next;
       }
       cursor = cursor.next;
-    } while (cursor != tail);
+    }
 
-    swap(head, middle);
+    swap(middle, tail);
 
-    return middle;
+    // 如果middle == head，则说明没有小于pivot的部分，如果middle === tail，则说明没有大于pivot的部分
+    return [middle === head ? null : preNode, middle === tail ? null : middle.next];
   };
 
   const sort = (head: LinkedNode, tail: LinkedNode) => {
     // 如果当前分区只有一个节点，则返回
-    if (head === tail) {
+    if (head === tail || head == null || tail == null) {
       return;
     }
 
     // 做分区，并返回分区节点
-    const middle = partition(head, tail);
+    const [preNode, nextNode] = partition(head, tail);
 
     // 递归，前部分
-    sort(head, middle);
+    sort(head, preNode);
     // 递归，后部分
-    sort(middle.next, tail);
+    sort(nextNode, tail);
   };
 
   // 便利一遍，找到尾节点
