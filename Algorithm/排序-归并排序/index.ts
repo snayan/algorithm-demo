@@ -50,7 +50,7 @@ export function mergeSortOnArray(arr: number[]) {
 
     // 将有序临时数组拷贝到原数组里
     i = 0;
-    while (start <= end) {
+    while (start + i <= end) {
       arr[start + i] = tmp[i];
       i++;
     }
@@ -98,7 +98,7 @@ export function mergeSortOnLinkedNode(head: LinkedNode) {
     let tmpTail = tmp;
     let i = head;
     let j = mid.next;
-    while (i !== mid && j !== tail) {
+    do {
       let cloneNode: LinkedNode;
       if (j.val < i.val) {
         cloneNode = new LinkedNode(j.val, null);
@@ -109,23 +109,25 @@ export function mergeSortOnLinkedNode(head: LinkedNode) {
       }
       tmpTail.next = cloneNode;
       tmpTail = tmpTail.next;
-    }
+    } while (i !== mid.next && j !== tail.next);
+
     // 如果第一个链表还有未合入部分
-    while (i !== mid) {
+    while (i !== mid.next) {
       tmpTail.next = new LinkedNode(i.val, null);
       i = i.next;
       tmpTail = tmpTail.next;
     }
     // 如果第二个链表还有未合入部分
-    while (j !== tail) {
+    while (j !== tail.next) {
       tmpTail.next = new LinkedNode(j.val, null);
       j = j.next;
       tmpTail = tmpTail.next;
     }
     // 将临时链表拷贝到原链表
+    j = head;
     while (tmp.next) {
-      head.val = tmp.next.val;
-      head = head.next;
+      j.val = tmp.next.val;
+      j = j.next;
       tmp = tmp.next;
     }
   };
