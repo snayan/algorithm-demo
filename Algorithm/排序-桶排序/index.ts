@@ -18,31 +18,38 @@ export function bucketSort(arr: number[]) {
     return;
   }
 
-  let count = 100; // 桶个数
-
-  let min = Number.MIN_SAFE_INTEGER;
-  let max = Number.MAX_SAFE_INTEGER;
+  let min = Number.MAX_SAFE_INTEGER;
+  let max = Number.MIN_SAFE_INTEGER;
 
   // 先取出数据范围
   for (let i of arr) {
     min = Math.min(min, i);
     max = Math.max(max, i);
   }
-  let range = (max - min) / (count - 1);
-  // 如果全部都一样，则直接返回
-  if (range === 0) {
+  // 如果全都一样大，则直接返回
+  if (min === max) {
     return;
   }
 
+  let count = 1 + Math.ceil(len / 100); // 桶个数,最小2个桶
+  count = Math.min(100, count); // 最大100个桶
+  let range = (max - min) / (count - 1);
+
   let buckets = new Array<number[]>(count);
-  buckets = buckets.map(() => []);
 
   // 划分到桶里
   for (let value of arr) {
     let index = Math.floor((value - min) / range);
     let bucket = buckets[index];
+    if (!Array.isArray(bucket)) {
+      buckets[index] = [];
+      bucket = buckets[index];
+    }
     bucket.push(value);
   }
+
+  //  过滤调空的桶
+  buckets = buckets.filter(Boolean);
 
   // 对每个桶单独排序
   for (let bucket of buckets) {

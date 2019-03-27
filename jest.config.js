@@ -3,5 +3,5 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   moduleFileExtensions: ['ts', 'js', 'json'],
-  testMatch: ['<rootDir>/Algorithm/查找-求无序数组中第K大元素/test.spec.ts'],
+  testMatch: ['<rootDir>/Algorithm/排序-桶排序/test.spec.ts'],
 };
