@@ -12,6 +12,7 @@ import { quickSortOnArray } from '../排序-快速排序';
 */
 export function bucketSort(arr: number[]) {
   const len = arr.length;
+  debugger;
 
   /* 数组为空，或者只有一个数据，则直接返回 */
   if (len < 2) {

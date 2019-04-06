@@ -22,7 +22,10 @@ export function countSort(arr: number[]) {
   const max = Math.max.apply(Math, arr);
 
   // 申请一个记录个数的数组，下标标志分数，值标识个数
-  const countArr = new Array(max + 1);
+  const countArr = [];
+  for (let i = 0; i < max + 1; i++) {
+    countArr[i] = 0;
+  }
 
   // 遍历一遍arr，求出countArr, 那么 countArr下标 j 的值 ,就表示分数等于j的个数了
   for (let i of arr) {
@@ -30,9 +33,10 @@ export function countSort(arr: number[]) {
     countArr[i] = count + 1;
   }
 
+
   // 对countArr 顺序求和，那么 i ,就表示分数小于等于i的个数了
   for (let i = 1, j = countArr.length; i < j; i++) {
-    countArr[i] = countArr[i] + countArr[i - 2];
+    countArr[i] = countArr[i] + countArr[i - 1];
   }
 
   // 遍历arr，结合countArr，进行排序
