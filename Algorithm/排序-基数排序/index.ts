@@ -31,6 +31,11 @@ export function radixSort(arr: Array<number | string>) {
   for (let i = maxLen; i > 0; i--) {
     countSort(arr, i - 1, len);
   }
+
+  // 去掉补全的0，并且转化位数字
+  for (let i = 0; i < len; i++) {
+    arr[i] = Number(arr[i]);
+  }
 }
 
 /* 计数排序 */
@@ -58,7 +63,7 @@ function countSort(arr: Array<number | string>, offset: number, len: number) {
   for (let j = len; j > 0; j--) {
     const value = arr[j - 1][offset];
     const index = countArr[value];
-    result[index] = arr[j - 1];
+    result[index - 1] = arr[j - 1];
     countArr[value] = index - 1;
   }
 

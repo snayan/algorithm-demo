@@ -3,5 +3,5 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   moduleFileExtensions: ['ts', 'js', 'json'],
-  testMatch: ['<rootDir>/Algorithm/排序-计数排序/test.spec.ts'],
+  testMatch: ['<rootDir>/Algorithm/排序-基数排序/test.spec.ts'],
 };
