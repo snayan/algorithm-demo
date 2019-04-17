@@ -21,26 +21,45 @@ export function sqrt(s: number, precision: number = 6): number {
     return 0;
   }
 
+  // 比较大小
+  const moreThan = (a: number, b: number) => {
+    return a - b > Number.EPSILON;
+  };
+
   // 二分查找
-  const binarySearch = (low: number, high: number, step: number): number => {
-    let mid = low + Math.floor((high - low) / 2);
-    if (Math.pow(mid, 2) < s) {
-      return binarySearch(mid + step, high, step);
-    } else if (Math.pow(mid + step, 2) > s) {
-      return binarySearch(low, mid - step, step);
+  const binarySearch = (low: number, high: number, pow: number): number => {
+    const expand = Math.pow(10, pow);
+    const scale = 1 / expand;
+    // 由于js精度问题，low === high 时实际上这个时候不需要再判断了，
+    if (Math.abs(low - high) < Number.EPSILON) {
+      return low;
+    }
+    let mid = Math.floor(low * expand + (high * expand - low * expand) / 2) * scale;
+    let value = Math.pow(mid, 2);
+    let next = Math.pow(mid + scale, 2);
+    // 由于js精度问题，low === high 时实际上这个时候不需要再判断了，
+    if (Math.abs(value - s) < Number.EPSILON) {
+      return mid;
+    }
+    if (moreThan(value, s)) {
+      return binarySearch(low, mid - scale, pow);
+    } else if (moreThan(s, next)) {
+      return binarySearch(mid + scale, high, pow);
     } else {
       return mid;
     }
   };
 
-  let result = 0;
+  // 先求整数位
+  let result = binarySearch(0, s, 0);
 
-  //  i=0,求整数位，i=1，求第一位小数，i=2.求第二位小数。。。i=6，求第六位小数
-  for (let i = 0; i <= precision; i++) {
-    const scale = Math.pow(10, -1 * i);
-    const low = result * scale;
-    const high = low + scale;
-    result = binarySearch(low, high, scale);
+  // i=0,求第一位小数，i=1.求第二位小数。。。i=5，求第六位小数
+  for (let i = 0; i < precision; i++) {
+    let low = result;
+    let high = result + Math.pow(10, -1 * i);
+    const expand = Math.pow(10, i + 1);
+    result = binarySearch(low, high, i + 1);
+    result = Math.floor(result * expand) / expand;
   }
 
   return result;
