@@ -22,4 +22,4 @@
 * [极客时间，【数据结构和算法之美】专栏](https://time.geekbang.org/column/intro/126)
 * [学习JavaScript数据结构与算法](https://book.douban.com/subject/27129352/)
 * [算法图解](https://book.douban.com/subject/26979890/)
-* [数据结构算法图解]([http://www.ituring.com.cn/book/2538](http://www.ituring.com.cn/book/2538))
+* [数据结构算法图解](http://www.ituring.com.cn/book/2538)
