@@ -3,5 +3,5 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   moduleFileExtensions: ['ts', 'js', 'json'],
-  testMatch: ['<rootDir>/DataStructure/SkipList/test.spec.ts'],
+  testMatch: ['<rootDir>/DataStructure/BinarySearchTree/test.spec.ts'],
 };
