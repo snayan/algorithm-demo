@@ -5,7 +5,7 @@ interface Data<T> {
   deleted: boolean;
 }
 
-class BinarySearchTree<T = number> {
+class ArrayBinarySearchTree<T = number> {
 
   data: Data<T>[];
   len: number;
@@ -102,39 +102,41 @@ class BinarySearchTree<T = number> {
     }
   }
 
-  /* 查找 */
-  find(v: T) {
+  /* 查找，返回所有的下标 */
+  find(v: T): number[] {
     if (!this.len) {
-      return false;
+      return [];
     }
+    const result = [];
     const data = this.data;
     let index = 1;
-    let found = false;
     let finished = false;
-    while (!finished && !found) {
+    let found = false;
+    while (!finished) {
       const current = data[index];
-      found = !current.deleted && current.val === v;
-      if (!found) {
-        if (v < current.val) {
-          const leftChild = index << 1;
-          finished = !this.exist(leftChild);
-          if (!finished) {
-            index = leftChild;
-          }
-        } else {
-          const rightChild = (index << 1) + 1;
-          finished = !this.exist(rightChild);
-          if (!finished) {
-            index = rightChild;
-          }
+      if (v < current.val) {
+        const leftChild = index << 1;
+        finished = !this.exist(leftChild);
+        if (!finished) {
+          index = leftChild;
+        }
+      } else {
+        found = !current.deleted && current.val === v;
+        if (found) {
+          result.push(index);
+        }
+        const rightChild = (index << 1) + 1;
+        finished = !this.exist(rightChild);
+        if (!finished) {
+          index = rightChild;
         }
       }
     }
-    return found;
+    return result;
   }
 
   /* 查找最小值 */
-  findMin() {
+  findMin(): T | null {
     if (!this.len) {
       return null;
     }
@@ -155,7 +157,7 @@ class BinarySearchTree<T = number> {
   }
 
   /* 查找最大值 */
-  findMax() {
+  findMax(): T | null {
     if (!this.len) {
       return null;
     }
@@ -266,4 +268,4 @@ class BinarySearchTree<T = number> {
   }
 }
 
-export default BinarySearchTree;
+export default ArrayBinarySearchTree;
