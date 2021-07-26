@@ -47,6 +47,10 @@
 - [x] [桶排序](./Algorithm/排序-桶排序/)
 - [x] [堆排序](./Algorithm/排序-堆排序/)
 
+## 树
+
+- [x] [重建二叉树](./Algorithm/树-重建二叉树/)
+
 ## 文章
 
 - [数据结构和算法-前端必会知识点](https://snayan.github.io/post/2019/alorithm_outline_of_knowledge/)
